@@ -1,14 +1,15 @@
 type PieceType = "king" | "queen" | "rook" | "bishop" | "knight" | "pawn";
+type PlayerColor = "black" | "white";
 
 export default class Piece {
-    color: boolean;
+    color: PlayerColor;
     type: PieceType;
     row: number;
     col: number;
     captured: boolean;
     fen: string;
 
-    constructor(color: boolean, type: PieceType, row: number, col: number, captured: boolean, fen: string) {
+    constructor(color: PlayerColor, type: PieceType, row: number, col: number, captured: boolean, fen: string) {
         this.color = color;
         this.type = type;
         this.row = row;
@@ -21,4 +22,5 @@ export default class Piece {
         this.row = row;
         this.col = col;
     }
+    
 }

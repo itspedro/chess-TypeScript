@@ -1,6 +1,6 @@
 type PieceType = "king" | "queen" | "rook" | "bishop" | "knight" | "pawn";
 
-export default class IPiece {
+export default class Piece {
     color: boolean;
     type: PieceType;
     row: number;

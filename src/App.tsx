@@ -1,5 +1,5 @@
 import './App.css';
-import { Rendering } from './components/rendering/Rendering'
+import { Rendering } from './components/rendering/Game'
 
 function App() {
   return (

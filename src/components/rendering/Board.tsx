@@ -2,12 +2,19 @@ import '../styles/board.css'
 import { ISquareProps, IBoardProps } from './interfaces';
 import Piece from './Piece';
 import { PieceRender } from './PieceRender';
+import { possibleMovements } from '../rules/checkMovements';
 
 
 const Square: React.FC<ISquareProps> = ({ isBlack, content }) => {   
     const color = isBlack ? 'black' : 'white';
     const squareContent = content && <PieceRender piece={content} />;
-    return  <div className={`square ${color}`}>{squareContent}</div>;    
+    const handleClick = () => {
+       if(content?.type === 'pawn') {
+        const possibleMoves = possibleMovements(content);
+        console.log(possibleMoves)
+       }
+    };
+    return  <div onClick={handleClick} className={`square ${color}`}>{squareContent}</div>;    
 };
 
 export const Board: React.FC<IBoardProps> = ({ pieces }) => {
@@ -55,6 +62,7 @@ export const Board: React.FC<IBoardProps> = ({ pieces }) => {
         for(let row = 0; row < nRow; row++) {
             for(let col = 0; col < nCol; col++) {
                 const isBlack = (row + col) % 2 === 1;
+                // pieces.find((piece) => possibleMovements(piece))
                 const squarePiece = pieces.find((piece) => piece.row === row && piece.col === col ? piece : undefined);
                 squares.push(<Square row={row} col={col} isBlack={isBlack} content={squarePiece} />);
             };

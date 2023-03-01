@@ -19,7 +19,7 @@ export interface IBoardProps {
 export interface IPosition {
     row: number;
     col: number;
-  };
+};
   
 
 // export interface IMove {

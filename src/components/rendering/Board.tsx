@@ -2,15 +2,32 @@ import '../styles/board.css'
 import { ISquareProps, IBoardProps } from './interfaces';
 import Piece from './Piece';
 import { PieceRender } from './PieceRender';
+import { possibleMovements } from '../rules/checkMovements';
+// import { useState } from 'react';
 
 
 const Square: React.FC<ISquareProps> = ({ isBlack, content }) => {   
     const color = isBlack ? 'black' : 'white';
-    const squareContent = content && <PieceRender piece={content} />;
-    return  <div className={`square ${color}`}>{squareContent}</div>;    
+    const squareContent = content && <PieceRender piece={content} />
+    
+    // const [selectedPiece, setSelectedPiece] = useState<Piece | undefined>(undefined);
+
+    // const handleClick = (piece: Piece | undefined) => {
+    //     piece ? setSelectedPiece(piece) : setSelectedPiece(undefined);
+    //     const possibleMoves = selectedPiece && possibleMovements(selectedPiece);
+    //     console.log(possibleMoves)
+    // };
+
+
+    const handleClick = (): void => {
+        content !== undefined && possibleMovements(content);
+    };
+
+    return  <div onClick={() => handleClick()} className={`square ${color}`}>{squareContent} </div>
 };
 
 export const Board: React.FC<IBoardProps> = ({ pieces }) => {
+
     const nRow: number = 8; 
     const nCol: number = 8; 
 
@@ -55,8 +72,13 @@ export const Board: React.FC<IBoardProps> = ({ pieces }) => {
         for(let row = 0; row < nRow; row++) {
             for(let col = 0; col < nCol; col++) {
                 const isBlack = (row + col) % 2 === 1;
-                const squarePiece = pieces.find((piece) => piece.row === row && piece.col === col ? piece : undefined);
-                squares.push(<Square row={row} col={col} isBlack={isBlack} content={squarePiece} />);
+                const squarePiece = pieces.find((piece) => piece.row === row && piece.col === col);
+                squares.push(<Square 
+                    row={row}
+                    col={col}
+                    isBlack={isBlack}
+                    content={squarePiece || undefined}
+                    />);
             };
         };
         

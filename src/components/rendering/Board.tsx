@@ -1,29 +1,21 @@
-import '../styles/board.css'
-import { ISquareProps, IBoardProps } from './interfaces';
-import Piece from './Piece';
+import { Pawn, Rook } from '../rules/checkMovements';
+import { ISquareProps, IBoardProps, IPosition } from './interfaces';
 import { PieceRender } from './PieceRender';
-import { possibleMovements } from '../rules/checkMovements';
-// import { useState } from 'react';
-
+import '../styles/board.css'
 
 const Square: React.FC<ISquareProps> = ({ isBlack, content }) => {   
     const color = isBlack ? 'black' : 'white';
     const squareContent = content && <PieceRender piece={content} />
-    
-    // const [selectedPiece, setSelectedPiece] = useState<Piece | undefined>(undefined);
 
-    // const handleClick = (piece: Piece | undefined) => {
-    //     piece ? setSelectedPiece(piece) : setSelectedPiece(undefined);
-    //     const possibleMoves = selectedPiece && possibleMovements(selectedPiece);
-    //     console.log(possibleMoves)
-    // };
-
-
-    const handleClick = (): void => {
-        content !== undefined && possibleMovements(content);
+    const handleClick = (): IPosition[] => {
+        
+            if(content !== undefined) {
+                const possível = content.possibleMovements();
+                return possível
+            };
     };
 
-    return  <div onClick={() => handleClick()} className={`square ${color}`}>{squareContent} </div>
+    return  <div onClick={() => handleClick()} className={`square ${color}`}>{squareContent}</div>
 };
 
 export const Board: React.FC<IBoardProps> = ({ pieces }) => {
@@ -34,50 +26,25 @@ export const Board: React.FC<IBoardProps> = ({ pieces }) => {
     const generateBoard = () => {
         const squares = [];
 
-        const pieces = [
-            new Piece("black", "rook", 0, 0, false, "R"),
-            new Piece("black", "knight", 0, 1, false, "N"),
-            new Piece("black", "bishop", 0, 2, false, "B"),
-            new Piece("black", "queen", 0, 3, false, "Q"),
-            new Piece("black", "king", 0, 4, false, "K"),
-            new Piece("black", "bishop", 0, 5, false, "B"),
-            new Piece("black", "knight", 0, 6, false, "N"),
-            new Piece("black", "rook", 0, 7, false, "R"),
-            new Piece("black", "pawn", 1, 0, false, "P"),
-            new Piece("black", "pawn", 1, 1, false, "P"),
-            new Piece("black", "pawn", 1, 2, false, "P"),
-            new Piece("black", "pawn", 1, 3, false, "P"),
-            new Piece("black", "pawn", 1, 4, false, "P"),
-            new Piece("black", "pawn", 1, 5, false, "P"),
-            new Piece("black", "pawn", 1, 6, false, "P"),
-            new Piece("black", "pawn", 1, 7, false, "P"),
-            new Piece("white", "rook", 7, 0, false, "r"),
-            new Piece("white", "knight", 7, 1, false, "n"),
-            new Piece("white", "bishop", 7, 2, false, "b"),
-            new Piece("white", "queen", 7, 3, false, "q"),
-            new Piece("white", "king", 7, 4, false, "k"),
-            new Piece("white", "bishop", 7, 5, false, "b"),
-            new Piece("white", "knight", 7, 6, false, "n"),
-            new Piece("white", "rook", 7, 7, false, "r"),
-            new Piece("white", "pawn", 6, 0, false, "p"),
-            new Piece("white", "pawn", 6, 1, false, "p"),
-            new Piece("white", "pawn", 6, 2, false, "p"),
-            new Piece("white", "pawn", 6, 3, false, "p"),
-            new Piece("white", "pawn", 6, 4, false, "p"),
-            new Piece("white", "pawn", 6, 5, false, "p"),
-            new Piece("white", "pawn", 6, 6, false, "p"),
-            new Piece("white", "pawn", 6, 7, false, "p"),
-        ];
+        const piece =[
+            new Pawn({col:0, row:0}, "black"),
+            new Pawn({col:1, row:2}, "white"),
+            new Pawn({col:2, row:0}, "black"),
+            new Rook({col: 3, row: 0}, "white"),
+        ]
+
 
         for(let row = 0; row < nRow; row++) {
             for(let col = 0; col < nCol; col++) {
                 const isBlack = (row + col) % 2 === 1;
-                const squarePiece = pieces.find((piece) => piece.row === row && piece.col === col);
+                const squarePiece = piece.find((piece) => piece.position.row === row && piece.position.col === col);
+                const content = squarePiece !== undefined ? squarePiece : squarePiece;
+
                 squares.push(<Square 
                     row={row}
                     col={col}
                     isBlack={isBlack}
-                    content={squarePiece || undefined}
+                    content={content}
                     />);
             };
         };

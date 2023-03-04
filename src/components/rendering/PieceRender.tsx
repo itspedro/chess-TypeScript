@@ -32,11 +32,10 @@ export const PieceRender: React.FC<IPieceProps> = ({ piece }) => {
     };
 
     const iconUrl = imageMap[type][color]
-    // console.log(`type: ${type}, color: ${color}, iconUrl: ${iconUrl}`);
-
+    
     return (
         <div className="piece" style={{ backgroundColor: 'transparent' }}>
-            <img src={iconUrl} alt={`${type} ${color? "black" : "white"}`}/>
+            <img src={iconUrl} alt={`${type} ${color}`}/>
         </div>
     )
     

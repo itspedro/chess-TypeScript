@@ -1,79 +1,75 @@
-// import { possibleMovements } from './checkMovements';
-import { IPosition } from "../rendering/interfaces";
-import Piece from "../rendering/Piece";
+import { IPosition, IPiece, PieceType, PieceColor } from "../rendering/interfaces";
+export class Pawn implements IPiece {
 
+    constructor(public position: IPosition, public color: PieceColor, public type: PieceType = "pawn") {}
+    // img: string[] =  [
+    //             "https://upload.wikimedia.org/wikipedia/commons/c/c7/Chess_pdt45.svg",
+    //             "https://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg",  
+    //         ]; 
 
-export const possibleMovements = (piece: Piece): IPosition[] => {
-    const { row, col } = piece;
-    console.log(`a Peça "${piece.type}" está na linha: ${row + 1} e na coluna: ${col + 1}`);
-    
+    // getImg(): string { 
+    //     return this.color === "black" ? this.img[0] : this.img[1];
+    // }
 
-    return[{row, col}];
-};
+    possibleMovements(): IPosition[] {
+        return [
+            {
+                row: this.color === "black" ? this.position.row + 1 : this.position.row -1,
+                col: this.position.col
+            }
+        ]
+    }
 
-// export class Pawn implements Piece {
-//     color: PieceColor;
-//     type: PieceType;
-//     row: number;
-//     col: number;
-//     captured: boolean;
-//     fen: string;
+    getPosition(): IPosition {
+        return this.position
+    }
 
-//     constructor(color: PieceColor, type: PieceType, row: number, col: number, captured: boolean, fen: string) {
-//         this.color=color;
-//         this.type= "pawn";
-//         this.row=row;
-//         this.col=col;
-//         this.captured= false;
-//         this.fen=fen;
-//     }
+    setPosition(position: IPosition): void {
+        this.position = position;
+    }
 
-//     possibleMovements(): IPosition[] {
+}
+export class Rook implements IPiece {
 
-//         console.log(`O peão está na linha: ${this.row}\ne na coluna: ${this.col}`);
-//         return [{row: this.row, col: this.col}]
-//     }
-// }
+    constructor(public position: IPosition, public color: PieceColor, public type: PieceType = "rook") {}
 
+    possibleMovements(): IPosition[] {
+        return [
+            {
+                row: this.color === "black" ? this.position.row + 1 : this.position.row -1,
+                col: this.position.col
+            }
+        ]
+    }
 
-// export class Pawn implements IPiece {
+    getPosition(): IPosition {
+        return this.position
+    }
 
-    
-//     possibleMovements(): IPosition[] {
+    setPosition(position: IPosition): void {
+        this.position = position;
+    }
 
+}
+export class Queen implements IPiece {
 
-//         console.log(`O peão está na linha: ${row}\ne na coluna: ${col}`);
+    constructor(public position: IPosition, public color: PieceColor, public type: PieceType = "queen"){}
 
-//         // const movements = [];
-//         // const direction = 1;
-//         // const squareInFront = { row: this.row + direction, col: this.col };
-//         // return [{
-//         //     row: 0,
-//         //     col: 0,
-//         // }]
+    possibleMovements(): IPosition[] {
+        return [
+            {
+                row: this.position.col + 1,
+                col: this.position.row
+            }
+        ]
+    }
 
-//         return [{row, col}];
-//     }
-// };
+    getPosition(): IPosition {
+        return this.position
+    }
 
-// export class Rook implements IPiece {
-//     row: number;
-//     col: number;
-//     constructor(row: number, col: number) {
-//         this.row = row;
-//         this.col = col;
-//     }
-//     possibleMovements(): IPosition[] {
-//         const movements = [];
-//         const direction = 1;
-//         const squareInFront = { row: this.row + direction, col: this.col };
-//         return [{
-//             row: 0,
-//             col: 0,
-//         }]
-//     }
-// };
+    setPosition(position: IPosition): void {
+        this.position = position;
+    }
 
-// export const possivelMoviments = (piece: Piece): IPosition[] => {
-//     return piece.possibleMovements()
-// };
+}

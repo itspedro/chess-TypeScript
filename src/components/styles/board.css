@@ -30,6 +30,10 @@
     background-color: #d8baa0;
 }
 
+.square.possible{
+    background-color: #a0d8b375;
+}
+
 .piece {
     display: flex;
     align-items: center;

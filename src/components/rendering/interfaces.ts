@@ -2,7 +2,9 @@ export interface ISquareProps {
     row: number;
     col: number;
     isBlack: boolean;
-    content: IPiece;
+    content: IPiece | undefined;
+    isPossible: boolean;
+    onClick: React.MouseEventHandler<HTMLDivElement>;
 };
 
 export interface IPieceProps {

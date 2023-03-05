@@ -1,6 +1,6 @@
 import { ISquareProps, IBoardProps, IPosition, IPiece } from './interfaces';
 import { PieceRender } from './PieceRender';
-import '../styles/board.css'
+import '../styles/board.css';
 import { useEffect, useState } from 'react';
 
 
@@ -17,9 +17,7 @@ export const Board: React.FC<IBoardProps> = ({ pieces }) => {
 
     const nRow: number = 8; 
     const nCol: number = 8;
-    
-    
-    const [ currentPieces, setCurrentPieces ] = useState<IPiece[]>(pieces);
+
     const [ possibleMoves, setPossibleMoves ] = useState<IPosition[]>([]);
     const [ targetPos, setTargetPos ] = useState<IPosition | undefined >(undefined);
     const [ selectedPiece, setSelectedPiece ] = useState<IPiece | undefined>(undefined);
@@ -27,65 +25,46 @@ export const Board: React.FC<IBoardProps> = ({ pieces }) => {
     const handleSquareClick = (piece: IPiece | undefined, position: IPosition): void => {
 
         const currentPosition = position;
-
         if(piece) {
-
             const possible: IPosition[] = piece.possibleMovements();
             setPossibleMoves(possible);
             setSelectedPiece(piece);
         } else {
             setPossibleMoves([])
-        }
+        };
 
         if (!piece && possibleMoves) {
             setTargetPos(possibleMoves.find((pos) => pos.row === currentPosition.row && pos.col === currentPosition.col));
-        }
-
+        };
     };
 
     useEffect(() => {
 
         if (selectedPiece && targetPos) {
 
-            const updatePieces = currentPieces.map((piece) => {
+            pieces.map((piece) => {
                 if (piece === selectedPiece) {
-                    return {
-                        ...piece,
-                        position: targetPos,
-                    };
-                }
+                    piece.setPosition(targetPos);
+                };
                 return piece;
-            })
-            console.log(updatePieces);
+            });
 
-            setCurrentPieces(updatePieces);
-
-            //setCurrentPieces([...pieces, selectedPiece.setPosition(targetPos)]);
             setPossibleMoves([]);
             setTargetPos(undefined);
 
-        }
+        };
 
-    }, [targetPos, selectedPiece, currentPieces]);
+    }, [targetPos, selectedPiece, pieces]);
 
     const generateBoard = () => {
         const squares = [];
 
-        // pieces = [
-        //     new Pawn({col:0, row:1}, "black"),
-        //     new Pawn({col:1, row:6}, "white"),
-        //     new Pawn({col:2, row:0}, "black"),
-        //     new Rook({col:3, row:0}, "white"),
-        //     new Knight({col:6, row:0}, "white"),
-        // ]
-
-
         for(let row = 0; row < nRow; row++) {
             for(let col = 0; col < nCol; col++) {
                 const isBlack = (row + col) % 2 === 1;
-                const squarePiece = currentPieces.find((piece) => piece.position.row === row && piece.position.col === col);
+                const squarePiece = pieces.find((piece) => piece.position.row === row && piece.position.col === col);
                 const posMoves = possibleMoves.find((move) => move.row === row && move.col === col);
-                const position: IPosition = {row: row, col: col}
+                const position: IPosition = {row: row, col: col};
 
                 squares.push(<Square 
                     row={row}
@@ -106,5 +85,5 @@ export const Board: React.FC<IBoardProps> = ({ pieces }) => {
         <div className="board-container">
             <div className="board">{generateBoard()}</div>
         </div>
-    )
+    );
 };

@@ -25,6 +25,7 @@ export type PieceColor = "black" | "white";
 export interface IPiece {
     type: PieceType;
     color: PieceColor;
+    position: IPosition;
     //getImg(): string;
     possibleMovements(): IPosition[];
     getPosition(): IPosition;

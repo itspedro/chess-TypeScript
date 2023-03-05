@@ -1,22 +1,14 @@
-import { Knight, Pawn, Rook } from '../rules/checkMovements';
 import { ISquareProps, IBoardProps, IPosition, IPiece } from './interfaces';
 import { PieceRender } from './PieceRender';
 import '../styles/board.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const Square: React.FC<ISquareProps> = ({ isBlack, content, isPossible, onClick }) => {   
     const color = isBlack ? 'black' : 'white';
     const squareContent = content && <PieceRender piece={content} />
     const squareClass = `${color} ${isPossible ? 'possible' : ''}`;
-    // const [moves, setMoves] = useState<IPosition[]>();
 
-    // const handleClick = (): void => {
-    //         if(content !== undefined) {
-    //             const possível = content.possibleMovements();
-    //             console.log(possível);
-    //         };
-    // };
 
     return  <div onClick={onClick} className={`square ${squareClass}`}>{squareContent}</div>
 };
@@ -24,39 +16,76 @@ const Square: React.FC<ISquareProps> = ({ isBlack, content, isPossible, onClick 
 export const Board: React.FC<IBoardProps> = ({ pieces }) => {
 
     const nRow: number = 8; 
-    const nCol: number = 8; 
+    const nCol: number = 8;
+    
+    
+    const [ currentPieces, setCurrentPieces ] = useState<IPiece[]>(pieces);
+    const [ possibleMoves, setPossibleMoves ] = useState<IPosition[]>([]);
+    const [ targetPos, setTargetPos ] = useState<IPosition | undefined >(undefined);
+    const [ selectedPiece, setSelectedPiece ] = useState<IPiece | undefined>(undefined);
 
-    const [possibleMoves, setPossibleMoves] = useState<IPosition[]>([]);
+    const handleSquareClick = (piece: IPiece | undefined, position: IPosition): void => {
 
-    const handleSquareClick = (piece: IPiece | undefined): void => {
-        if(piece !== undefined) {
-            const possible = piece.possibleMovements();
+        const currentPosition = position;
+
+        if(piece) {
+
+            const possible: IPosition[] = piece.possibleMovements();
             setPossibleMoves(possible);
+            setSelectedPiece(piece);
+        } else {
+            setPossibleMoves([])
         }
-        // if (setPosition && possibleMoves.some((pos) => pos.row === piece?.position.row && pos.col === piece?.position.col)) {
-        //     setPosition(piece?.getPosition(), possibleMoves.find(pos => pos.row === piece?.position.row && pos.col === piece?.position.col)!)
-        //     setPossibleMoves([]);
-        // }
+
+        if (!piece && possibleMoves) {
+            setTargetPos(possibleMoves.find((pos) => pos.row === currentPosition.row && pos.col === currentPosition.col));
+        }
+
     };
+
+    useEffect(() => {
+
+        if (selectedPiece && targetPos) {
+
+            const updatePieces = currentPieces.map((piece) => {
+                if (piece === selectedPiece) {
+                    return {
+                        ...piece,
+                        position: targetPos,
+                    };
+                }
+                return piece;
+            })
+            console.log(updatePieces);
+
+            setCurrentPieces(updatePieces);
+
+            //setCurrentPieces([...pieces, selectedPiece.setPosition(targetPos)]);
+            setPossibleMoves([]);
+            setTargetPos(undefined);
+
+        }
+
+    }, [targetPos, selectedPiece, currentPieces]);
 
     const generateBoard = () => {
         const squares = [];
 
-        const piece =[
-            new Pawn({col:0, row:0}, "black"),
-            new Pawn({col:1, row:2}, "white"),
-            new Pawn({col:2, row:0}, "black"),
-            new Rook({col: 3, row: 0}, "white"),
-            new Knight({col: 6, row: 0}, "white"),
-        ]
+        // pieces = [
+        //     new Pawn({col:0, row:1}, "black"),
+        //     new Pawn({col:1, row:6}, "white"),
+        //     new Pawn({col:2, row:0}, "black"),
+        //     new Rook({col:3, row:0}, "white"),
+        //     new Knight({col:6, row:0}, "white"),
+        // ]
 
 
         for(let row = 0; row < nRow; row++) {
             for(let col = 0; col < nCol; col++) {
                 const isBlack = (row + col) % 2 === 1;
-                const squarePiece = piece.find((piece) => piece.position.row === row && piece.position.col === col);
+                const squarePiece = currentPieces.find((piece) => piece.position.row === row && piece.position.col === col);
                 const posMoves = possibleMoves.find((move) => move.row === row && move.col === col);
-                // const posMoves = moves[0].row === row && moves[1].col === col ? moves : undefined;
+                const position: IPosition = {row: row, col: col}
 
                 squares.push(<Square 
                     row={row}
@@ -64,8 +93,7 @@ export const Board: React.FC<IBoardProps> = ({ pieces }) => {
                     isBlack={isBlack}
                     content={squarePiece}
                     isPossible={posMoves !== undefined}
-                    onClick={() => handleSquareClick(squarePiece)}
-                    // moves={posMoves}
+                    onClick={() => handleSquareClick(squarePiece, position)}
                     />);
             };
         };

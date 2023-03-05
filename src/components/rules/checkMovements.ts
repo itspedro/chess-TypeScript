@@ -12,7 +12,13 @@ export class Pawn implements IPiece {
     // }
 
     possibleMovements(): IPosition[] {
+        //const moves: IPosition[] = [];
+        const initialPos = (this.color === "black" && this.position.row === 1) || (this.color === "white" && this.position.row === 6);
         return [
+            {
+                row: initialPos ?  this.color === "black" ? this.position.row + 2 : this.position.row - 2 : this.color === "black" ? this.position.row + 1 : this.position.row -1,
+                col: this.position.col
+            },
             {
                 row: this.color === "black" ? this.position.row + 1 : this.position.row -1,
                 col: this.position.col
@@ -50,7 +56,7 @@ export class Rook implements IPiece {
                 newPosition = { row: newPosition.row + direction.row, col: newPosition.col + direction.col}
             }
         }
-        
+
         return moves
     }
 

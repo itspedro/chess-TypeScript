@@ -1,41 +1,33 @@
-import Piece from "./Piece";
-
-
 export interface ISquareProps {
     row: number;
     col: number;
     isBlack: boolean;
-    content: Piece | undefined;
+    content: IPiece | undefined;
+    isPossible: boolean;
+    onClick: React.MouseEventHandler<HTMLDivElement>;
 };
 
 export interface IPieceProps {
-    piece: Piece;
+    piece: IPiece;
 };
 
 export interface IBoardProps {
-    pieces: Piece[];
+    pieces: IPiece[];
 };
 
-export interface IPosition {
+export type IPosition = {
     row: number;
     col: number;
-};
-  
+}
 
-// export interface IMove {
-//     fromRow: number;
-//     fromCol: number;
-//     toRow: number;
-//     toCol: number;
-// }
-
-// type PlayerColor = "black" | "white";
-
-// export interface IGameState {
-//     board: Piece[][];
-//     turn: PlayerColor;
-// }
-
+export type PieceType = "king" | "queen" | "rook" | "bishop" | "knight" | "pawn";
+export type PieceColor = "black" | "white";
 export interface IPiece {
+    type: PieceType;
+    color: PieceColor;
+    position: IPosition;
+    //getImg(): string;
     possibleMovements(): IPosition[];
+    getPosition(): IPosition;
+    setPosition(position: IPosition): void;
 };

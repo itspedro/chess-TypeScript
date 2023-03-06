@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 const Square: React.FC<ISquareProps> = ({ isBlack, content, isPossible, onClick }) => {   
     const color = isBlack ? 'black' : 'white';
-    const squareContent = content && <PieceRender piece={content} />
+    const squareContent = content && <PieceRender piece={content} /> || (isPossible ?  <span className={'dot'}></span> : '')
     const squareClass = `${color} ${isPossible ? 'possible' : ''}`;
 
 

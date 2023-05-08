@@ -13,26 +13,19 @@
 }
 
 .square {
-    width: 100px;
-    height: 100px;
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 36px;
-    background-color: #d8baa0;
-}
-
-.square.black {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+}
+
+.square.black {
     background-color: #8c5833;
 }
 
 .square.white {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: #d8baa0;
 }
 
@@ -45,9 +38,7 @@
 }
 
 .piece {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: transparent;
     width: 100%;
     height: 100%;
 }
@@ -55,4 +46,31 @@
 .piece img {
     width: 100%;
     height: 100%;
+    -webkit-user-drag: none;
+}
+
+@media screen and (max-width: 1366px) {
+
+    .board {
+        grid-template-columns: repeat(8, 70px);
+        grid-template-rows: repeat(8, 70px);
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    .board {
+        grid-template-columns: repeat(8, 50px);
+        grid-template-rows: repeat(8, 50px);
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+
+    .board {
+        grid-template-columns: repeat(8, 30px);
+        grid-template-rows: repeat(8, 30px);
+    }
+    
 }

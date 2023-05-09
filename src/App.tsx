@@ -1,6 +1,6 @@
-import "./styles/App.css";
-import Game from "./pages/Game";
-import Chat from "./pages/Chat";
+import './styles/App.css';
+import Game from './pages/Game';
+import Chat from './pages/Chat';
 
 function App() {
   return (

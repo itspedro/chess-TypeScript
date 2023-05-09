@@ -1,41 +1,41 @@
-import { Position, Piece, PieceType, PieceColor } from "@/types/interfaces";
+import { Position, Piece, PieceType, PieceColor } from '@/types/interfaces';
 
 const imageMap = {
   king: {
     black:
-      "https://upload.wikimedia.org/wikipedia/commons/f/f0/Chess_kdt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/f/f0/Chess_kdt45.svg',
     white:
-      "https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg',
   },
   queen: {
     black:
-      "https://upload.wikimedia.org/wikipedia/commons/4/47/Chess_qdt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/4/47/Chess_qdt45.svg',
     white:
-      "https://upload.wikimedia.org/wikipedia/commons/1/15/Chess_qlt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/1/15/Chess_qlt45.svg',
   },
   rook: {
     black:
-      "https://upload.wikimedia.org/wikipedia/commons/f/ff/Chess_rdt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/f/ff/Chess_rdt45.svg',
     white:
-      "https://upload.wikimedia.org/wikipedia/commons/7/72/Chess_rlt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/7/72/Chess_rlt45.svg',
   },
   bishop: {
     black:
-      "https://upload.wikimedia.org/wikipedia/commons/9/98/Chess_bdt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/9/98/Chess_bdt45.svg',
     white:
-      "https://upload.wikimedia.org/wikipedia/commons/b/b1/Chess_blt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/b/b1/Chess_blt45.svg',
   },
   knight: {
     black:
-      "https://upload.wikimedia.org/wikipedia/commons/e/ef/Chess_ndt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/e/ef/Chess_ndt45.svg',
     white:
-      "https://upload.wikimedia.org/wikipedia/commons/7/70/Chess_nlt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/7/70/Chess_nlt45.svg',
   },
   pawn: {
     black:
-      "https://upload.wikimedia.org/wikipedia/commons/c/c7/Chess_pdt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/c/c7/Chess_pdt45.svg',
     white:
-      "https://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg",
+      'https://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg',
   },
 };
 
@@ -43,7 +43,7 @@ export class Pawn implements Piece {
   constructor(
     public position: Position,
     public color: PieceColor,
-    public type: PieceType = "pawn"
+    public type: PieceType = 'pawn'
   ) {}
 
   getImg(): string {
@@ -51,24 +51,23 @@ export class Pawn implements Piece {
   }
 
   possibleMovements(): Position[] {
-    //const moves: IPosition[] = [];
     const initialPos =
-      (this.color === "black" && this.position.row === 1) ||
-      (this.color === "white" && this.position.row === 6);
+      (this.color === 'black' && this.position.row === 1) ||
+      (this.color === 'white' && this.position.row === 6);
     return [
       {
         row: initialPos
-          ? this.color === "black"
+          ? this.color === 'black'
             ? this.position.row + 2
             : this.position.row - 2
-          : this.color === "black"
-          ? this.position.row + 1
-          : this.position.row - 1,
+          : this.color === 'black'
+            ? this.position.row + 1
+            : this.position.row - 1,
         col: this.position.col,
       },
       {
         row:
-          this.color === "black"
+          this.color === 'black'
             ? this.position.row + 1
             : this.position.row - 1,
         col: this.position.col,
@@ -88,7 +87,7 @@ export class Rook implements Piece {
   constructor(
     public position: Position,
     public color: PieceColor,
-    public type: PieceType = "rook"
+    public type: PieceType = 'rook'
   ) {}
 
   getImg(): string {
@@ -133,7 +132,7 @@ export class Bishop implements Piece {
   constructor(
     public position: Position,
     public color: PieceColor,
-    public type: PieceType = "bishop"
+    public type: PieceType = 'bishop'
   ) {}
 
   getImg(): string {
@@ -178,7 +177,7 @@ export class King implements Piece {
   constructor(
     public position: Position,
     public color: PieceColor,
-    public type: PieceType = "king"
+    public type: PieceType = 'king'
   ) {}
 
   getImg(): string {
@@ -227,7 +226,7 @@ export class Knight implements Piece {
   constructor(
     public position: Position,
     public color: PieceColor,
-    public type: PieceType = "knight"
+    public type: PieceType = 'knight'
   ) {}
 
   getImg(): string {
@@ -283,7 +282,7 @@ export class Queen implements Piece {
   constructor(
     public position: Position,
     public color: PieceColor,
-    public type: PieceType = "queen"
+    public type: PieceType = 'queen'
   ) {}
 
   getImg(): string {

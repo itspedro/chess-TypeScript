@@ -1,14 +1,14 @@
-import { BoardProps, Position, Piece } from "@/types/interfaces";
-import "../styles/board.css";
-import { useEffect, useState } from "react";
-import Square from "../components/Square";
+import { BoardProps, Position, Piece } from '@/types/interfaces';
+import '../styles/board.css';
+import { useEffect, useState } from 'react';
+import Square from '../components/Square';
 
 function Board({ pieces }: BoardProps) {
-  const nRow: number = 8;
-  const nCol: number = 8;
+  const nRow = 8;
+  const nCol = 8;
 
   const [possibleMoves, setPossibleMoves] = useState<Position[]>([]);
-  const [targetPos, setTargetPos] = useState<Position | undefined>(undefined);
+  const [targetPos, setTargetPos] = useState<Position>();
   const [selectedPiece, setSelectedPiece] = useState<Piece | undefined>(
     undefined
   );
@@ -19,18 +19,14 @@ function Board({ pieces }: BoardProps) {
   ): void => {
     const currentPosition = position;
     if (piece) {
-      const possible: Position[] = piece.possibleMovements();
-      setPossibleMoves(possible);
+      setPossibleMoves(piece.possibleMovements());
       setSelectedPiece(piece);
-    } else {
-      setPossibleMoves([]);
     }
 
     if (!piece && possibleMoves) {
       setTargetPos(
         possibleMoves.find(
-          (pos) =>
-            pos.row === currentPosition.row && pos.col === currentPosition.col
+          (pos) => pos.row === currentPosition.row && pos.col === currentPosition.col
         )
       );
     }
@@ -72,6 +68,7 @@ function Board({ pieces }: BoardProps) {
             content={squarePiece}
             isPossible={posMoves !== undefined}
             onClick={() => handleSquareClick(squarePiece, position)}
+            key={`${row}-${col}`}
           />
         );
       }

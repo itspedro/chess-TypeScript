@@ -1,10 +1,12 @@
-import './App.css';
-import { Rendering } from './components/rendering/Rendering'
+import './styles/App.css';
+import Game from './pages/Game';
+import Chat from './pages/Chat';
 
 function App() {
   return (
     <div className="App">
-      <Rendering />
+      <Game />
+      <Chat />
     </div>
   );
 }

@@ -53,3 +53,12 @@
 .send {
   margin-right: 1rem;
 }
+
+@media (max-width: 800px) {
+  .chat-app {
+    font-size: 10px;
+    max-height: 300px;
+    width: 95%;
+    margin: auto;
+  }
+}

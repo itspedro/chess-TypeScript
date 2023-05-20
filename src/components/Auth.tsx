@@ -21,7 +21,7 @@ function Auth(props: any) {
   return (
     <div className="auth">
       <h1>Sign In With Google</h1>
-      <button onClick={signInWithGoogle}>Sign In</button>
+      <button className="btn" onClick={signInWithGoogle}>Sign In</button>
     </div>
   );
 }

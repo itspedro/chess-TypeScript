@@ -1,18 +1,21 @@
 import './styles/App.css';
 import Game from './pages/Game';
-import Chat from './components/Chat';
 import Auth from './components/Auth';
+import Room from './components/Room';
 import { useState } from 'react';
+import { Cookies } from 'react-cookie';
 
 function App() {
 
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const cookies = new Cookies();
+
+  const [isAuth, setIsAuth] = useState<boolean>(cookies.get('auth-token') ? true : false);
   
   if (isAuth) {
     return (
       <div className="App">
         <Game />
-        <Chat />
+        <Room setIsAuth={setIsAuth} />
       </div>
     );
   }

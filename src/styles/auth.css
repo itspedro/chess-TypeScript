@@ -1,0 +1,15 @@
+.auth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+@media screen and (max-width: 800px) {
+    .auth {
+        font-size: 10px;
+    }
+}

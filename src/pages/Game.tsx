@@ -5,7 +5,7 @@ import {
   Queen,
   Bishop,
   King,
-} from '../app/logic/PieceClass';
+} from '../app/PieceClass';
 import Board from './Board';
 
 function Game() {
